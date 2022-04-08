@@ -11,13 +11,31 @@ type EnvironmentSetup struct {
 	Config map[string]string
 }
 
-func (config *EnvironmentSetup) ParseEnvironment(configline string) (map[string]string, error) {
+func (config *EnvironmentSetup) ParseEnvironmentFromString(configline string) (map[string]string, error) {
 
 	log.Print("Received Raw Config: " + configline)
 
 	var result map[string]interface{}
 
 	err := json.Unmarshal([]byte(configline), &result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	str, err := buildKey("SPRING_CLOUD_CONFIG_SERVER_", result)
+	if err != nil {
+		return nil, err
+	}
+
+	return str, nil
+}
+
+func (config *EnvironmentSetup) ParseEnvironmentFromRaw(configraw json.RawMessage) (map[string]string, error) {
+
+	var result map[string]interface{}
+
+	err := json.Unmarshal(configraw, &result)
 
 	if err != nil {
 		return nil, err
