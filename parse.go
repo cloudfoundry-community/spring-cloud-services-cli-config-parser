@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strconv"
 	"strings"
 )
 
@@ -72,6 +73,10 @@ func buildKey(base string, keyint map[string]interface{}) (map[string]string, er
 			for k, v := range str {
 				envmap[k] = v
 			}
+		case bool:
+			s := strconv.FormatBool(value.(bool))
+			envmap[strings.ToUpper(sb.String())] = s
+			sb.Reset()
 		case float64:
 			s := fmt.Sprintf("%f", value.(float64))
 			envmap[strings.ToUpper(sb.String())] = s
