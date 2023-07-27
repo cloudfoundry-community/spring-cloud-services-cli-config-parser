@@ -1,3 +1,3 @@
-module github.com/starkandwayne/spring-cloud-services-cli-config-parser
+module github.com/cloudfoundry-community/spring-cloud-services-cli-config-parser
 
-go 1.18
+go 1.20
